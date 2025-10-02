@@ -70,14 +70,12 @@ router.post("/login", async (req, res) => {
       maxAge: 60 * 60 * 1000,
     });
 
-    res
-      .status(200)
-      .json({
-        success: true,
-        message: "Login Succesfull",
-        user: existUser || {},
-        token,
-      });
+    res.status(200).json({
+      success: true,
+      message: "Login Succesfull",
+      user: existUser || {},
+      token,
+    });
   } catch (err) {
     console.log(err);
     res.status(500).json({
