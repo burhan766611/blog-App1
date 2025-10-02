@@ -41,11 +41,12 @@ router.put("/edit/:id", isLogin, async (req, res) => {
     const { id } = req.params;
     const { content } = req.body;
 
-    const updatedComment = commentModel.findByIdAndUpdate(
+    const updatedComment = await commentModel.findByIdAndUpdate(
       id,
       { content: content },
       { new: true }
     );
+    // console.log(updatedComment);
     if (updatedComment) {
       return res.json({ success: true, message: "Comment updated successfully" });
     } else {

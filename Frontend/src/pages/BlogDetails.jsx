@@ -2,6 +2,7 @@ import { useParams, useNavigate } from "react-router-dom";
 import { useEffect, useState } from "react";
 import API from "../services/api";
 import AddComment from "./AddComment";
+import EditBlog from "./EditBlog";
 
 const BlogDetails = ({ user, isLoggedin }) => {
   const { id } = useParams();
@@ -44,9 +45,10 @@ const BlogDetails = ({ user, isLoggedin }) => {
     }
   };
 
-  const handleEdit = (post) => {
-    navigate("/EditPost", { state: { post } });
+  const handleEdit = (id) => {
+    navigate(`/EditPost/${id}`);
   };
+
 
   const handleSaveComment = async (id) => {
     try {

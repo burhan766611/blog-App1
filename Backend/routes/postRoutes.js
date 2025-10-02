@@ -74,12 +74,13 @@ router.get("/:id", async (req, res) => {
   try {
     const id = req.params.id;
     const postData = await postModel
-      .findById(req.params.id)
+      .findById(id)
       .populate({
         path: "comments",
         populate: { path: "author", select: "username" },
       })
       .populate("author", "username");
+      // console.log(postData);
     res.json({ success: true, post: postData, comments: postData.comments, postAuthorId: postData.author._id });
   } catch {
     res.json({ success: false, post: null, comments: null });

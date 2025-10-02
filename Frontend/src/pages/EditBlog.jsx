@@ -1,26 +1,60 @@
 import React, { useState } from "react";
 import API from "../services/api";
-import { useLocation, useNavigate } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
+import { useEffect } from "react";
 
 const EditBlog = () => {
-  const location = useLocation();
+  const { id } = useParams();
   const navigate = useNavigate();
-  const { post } = location.state || {};
 
-  const [editData, SetEditData] = useState({
-    title: post.title,
-    content: post.content,
+  const [postData, setPostData] = useState({});
+
+  useEffect(() => {
+    const fetchPost = async () => {
+      try {
+          const res = await API.get(`/posts/${id}`);
+          console.log(res.data);
+          if (res.data.success) {
+            setPostData(res.data.post);
+            // console.log(res.data.post);
+            setEditData({
+              title: res.data.post.title,
+              content: res.data.post.content,
+            });
+          } else {
+            alert("Post not found!");
+            navigate("/");
+          }
+        } catch (err) {
+          console.error(err);
+          alert("Error fetching post. Try again.");
+          navigate("/");
+        }
+    }
+    fetchPost();
+  },[id, navigate]);
+
+  // console.log(postData);
+
+  const [editData, setEditData] = useState({
+    title: postData.title,
+    content: postData.content,
   });
 
+  if(!postData){
+    navigate("/");
+  }
+
+
   const handleChange = (e) => {
-    SetEditData({ ...editData, [e.target.name]: e.target.value });
+    setEditData({ ...editData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     try {
-      const res = await API.put(`/posts/update/${post._id}`, editData);
+      const res = await API.put(`/posts/update/${postData._id}`, editData);
 
       if (res.data.success) {
         alert(res.data.message);

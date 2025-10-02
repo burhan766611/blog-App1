@@ -29,7 +29,7 @@ function App() {
           <Route path="/login" element={<Login />} />
           <Route path="/signup" element={<Signup />} />
           <Route path="/logout" element={<Logout />} />
-          <Route path="/EditPost" element={<EditBlog />} />
+          <Route path="/EditPost/:id" element={<EditBlog />} />
           <Route path="/addComment" element={<AddComment />} />
           <Route path="/post/:id" element={<BlogDetails isLoggedin={isLoggedin} user={user} />} />
         </Routes>
