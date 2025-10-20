@@ -3,13 +3,12 @@ import { AuthContext } from "../context/AuthContext";
 import { useContext } from "react";
 
 const Navbar = () => {
-  const { isLoggedin, logout, loading } = useContext(AuthContext);
+  const { isLoggedin, logout } = useContext(AuthContext);
 
   const handleLogout = async () => {
     await logout();
   };
 
-  if (loading) return <p>loading...</p>;
 
   return (
     <nav className="bg-white shadow-md px-6 py-4 flex justify-between items-center">
