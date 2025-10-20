@@ -1,16 +1,17 @@
 import React, { useState } from "react";
 import API from "../services/api";
 import { useNavigate } from "react-router-dom";
+import AIAssistant from "../components/AIAssitant";
 
 const CreateBlog = () => {
   const navigate = useNavigate();
-  const [postData, SetPostData] = useState({
+  const [postData, setPostData] = useState({
     title: "",
     content: "",
   });
 
   const handleChange = (e) => {
-    SetPostData({ ...postData, [e.target.name]: e.target.value });
+    setPostData({ ...postData, [e.target.name]: e.target.value });
   };
 
   const handleSubmit = async (e) => {
@@ -21,14 +22,14 @@ const CreateBlog = () => {
 
       if (result.data.success) {
         alert(result.data.message);
-        SetPostData({
+        setPostData({
           title: "",
           content: "",
         });
         navigate("/");
       } else {
         alert(result.data.message);
-        SetPostData({
+        setPostData({
           title: "",
           content: "",
         });
@@ -88,6 +89,14 @@ const CreateBlog = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-indigo-500 focus:outline-none"
             />
           </div>
+
+          {/* AI Assistant Component */}
+          <AIAssistant
+            text={postData.content}
+            setText={(newContent) =>
+              setPostData({ ...postData, content: newContent })
+            }
+          />
 
           {/* Submit Button */}
           <button

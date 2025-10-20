@@ -7,6 +7,7 @@ import ConnectDB from './config/db.js';
 import postRoutes from './routes/postRoutes.js';
 import isLogin from './middlewares/isLogin.js';
 import commentRoutes from './routes/commentRoutes.js';
+import aiRoutes from "./routes/ai.js";
 
 dotenv.config();
 const app = express()
@@ -26,6 +27,7 @@ app.use(cors({
 app.use("/users", userRoutes);
 app.use("/posts", postRoutes);
 app.use("/comments", commentRoutes);
+app.use("/api/ai", aiRoutes);
 
 app.get('/', (req, res) => {
   res.send('Hello World!')

@@ -2,49 +2,46 @@ import React, { useState } from "react";
 import API from "../services/api";
 import { useNavigate, useParams } from "react-router-dom";
 import { useEffect } from "react";
+import AIAssistant from "../components/AIAssitant";
 
 const EditBlog = () => {
   const { id } = useParams();
   const navigate = useNavigate();
 
   const [postData, setPostData] = useState({});
+    const [editData, setEditData] = useState({});
 
   useEffect(() => {
     const fetchPost = async () => {
       try {
-          const res = await API.get(`/posts/${id}`);
-          console.log(res.data);
-          if (res.data.success) {
-            setPostData(res.data.post);
-            // console.log(res.data.post);
-            setEditData({
-              title: res.data.post.title,
-              content: res.data.post.content,
-            });
-          } else {
-            alert("Post not found!");
-            navigate("/");
-          }
-        } catch (err) {
-          console.error(err);
-          alert("Error fetching post. Try again.");
+        const res = await API.get(`/posts/${id}`);
+        console.log(res.data);
+        if (res.data.success) {
+          setPostData(res.data.post);
+          // console.log(res.data.post);
+          setEditData({
+            title: res.data.post.title,
+            content: res.data.post.content,
+          });
+        } else {
+          alert("Post not found!");
           navigate("/");
         }
-    }
+      } catch (err) {
+        console.error(err);
+        alert("Error fetching post. Try again.");
+        navigate("/");
+      }
+    };
     fetchPost();
-  },[id, navigate]);
+  }, [id]);
 
   // console.log(postData);
 
-  const [editData, setEditData] = useState({
-    title: postData.title,
-    content: postData.content,
-  });
 
-  if(!postData){
+  if (!postData) {
     navigate("/");
   }
-
 
   const handleChange = (e) => {
     setEditData({ ...editData, [e.target.name]: e.target.value });
@@ -119,6 +116,13 @@ const EditBlog = () => {
               className="w-full px-4 py-2 border border-gray-300 rounded-lg focus:ring-2 focus:ring-amber-500 focus:outline-none"
             />
           </div>
+
+          <AIAssistant
+            text={editData.content}
+            setText={(newContent) =>
+              setEditData({ ...editData, content: newContent })
+            }
+          />
 
           {/* Update Button */}
           <button
