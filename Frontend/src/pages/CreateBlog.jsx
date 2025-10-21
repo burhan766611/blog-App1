@@ -9,6 +9,7 @@ const CreateBlog = () => {
     title: "",
     content: "",
   });
+  const [loading, setLoading] = useState(false)
 
   const handleChange = (e) => {
     setPostData({ ...postData, [e.target.name]: e.target.value });
@@ -16,6 +17,9 @@ const CreateBlog = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(loading) return ;
+    setLoading(true);
 
     try {
       const result = await API.post("/posts/create", postData);
@@ -37,6 +41,8 @@ const CreateBlog = () => {
     } catch (err) {
       console.log(err);
       alert("Server Error");
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -102,8 +108,9 @@ const CreateBlog = () => {
           <button
             type="submit"
             className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-200"
+            disabled={loading}
           >
-            Publish Post
+            { loading ? "Processing..." : "Publish Post" }
           </button>
         </form>
       </section>

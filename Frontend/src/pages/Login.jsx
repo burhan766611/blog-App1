@@ -9,6 +9,7 @@ const Login = () => {
     email: "",
     password: "",
   });
+  const [loading, setLoading] = useState(false);
 
   const { setIsLoggedin, setUser } = useContext(AuthContext);
   const navigate = useNavigate();
@@ -19,6 +20,9 @@ const Login = () => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+
+    if(loading) return;
+    setLoading(true);
 
     try {
       const result = await API.post("/users/login", loginData);
@@ -33,6 +37,8 @@ const Login = () => {
       }
     } catch (err) {
       console.log(err);
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -91,8 +97,9 @@ const Login = () => {
             <button
               type="submit"
               className="w-full py-2 px-4 bg-indigo-600 text-white font-semibold rounded-lg hover:bg-indigo-700 transition duration-200"
+              disabled={loading}
             >
-              Log In
+              { loading ? "Processing..." : "Login"}
             </button>
           </form>
 

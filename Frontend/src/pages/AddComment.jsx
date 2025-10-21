@@ -3,6 +3,7 @@ import API from "../services/api";
 
 const AddComment = ({ id, comments, setComments }) => {
   const [commentData, setCommentData] = useState("");
+  const [loading , setLoading] = useState(false);
 
   const handleChange = (e) => {
     setCommentData(e.target.value);
@@ -10,6 +11,9 @@ const AddComment = ({ id, comments, setComments }) => {
 
   const handleSubmit = async (e) => {
     e.preventDefault();
+    if(loading) return;
+    setLoading(true);
+    
 
     try {
       const res = await API.post(`/comments/add/${id}`, {
@@ -25,6 +29,8 @@ const AddComment = ({ id, comments, setComments }) => {
     } catch (err) {
       console.log(err);
       alert("Something went wront try again ! ");
+    } finally {
+      setLoading(false)
     }
   };
 
@@ -52,8 +58,9 @@ const AddComment = ({ id, comments, setComments }) => {
         <button
           type="submit"
           className="mt-3 w-full py-2 px-4 bg-indigo-500 text-white font-medium rounded-lg hover:bg-indigo-600 transition duration-200"
+          disabled={loading}
         >
-          Add Comment
+          { loading ? "Processing..." : "Add Comment"}
         </button>
       </form>
     </>

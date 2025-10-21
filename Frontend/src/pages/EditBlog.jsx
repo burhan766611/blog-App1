@@ -10,6 +10,7 @@ const EditBlog = () => {
 
   const [postData, setPostData] = useState({});
     const [editData, setEditData] = useState({});
+    const [loading, setLoading] = useState(false);
 
   useEffect(() => {
     const fetchPost = async () => {
@@ -50,6 +51,9 @@ const EditBlog = () => {
   const handleSubmit = async (e) => {
     e.preventDefault();
 
+    if(loading) return;
+    setLoading(true)
+
     try {
       const res = await API.put(`/posts/update/${postData._id}`, editData);
 
@@ -62,6 +66,8 @@ const EditBlog = () => {
     } catch (err) {
       console.log(err);
       alert("Something went wrong, please try again.");
+    } finally {
+      setLoading(false);
     }
   };
 
@@ -128,8 +134,9 @@ const EditBlog = () => {
           <button
             type="submit"
             className="w-full py-2 px-4 bg-amber-500 text-white font-semibold rounded-lg hover:bg-amber-600 transition duration-200"
+            disabled={loading}
           >
-            Update Post
+            { loading ? "Processing..." : "Update Post"}
           </button>
         </form>
 
