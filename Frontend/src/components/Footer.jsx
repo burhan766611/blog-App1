@@ -12,7 +12,7 @@ const Footer = () => {
           {/* Column 1: Blog Info / Logo */}
           <div>
             <h3 className="text-2xl font-bold text-indigo-600 mb-4">
-              <span>Blog</span>App
+              <span>WordWeave-AI</span>
             </h3>
             <p className="text-gray-700">
               Sharing insights on web development, technology trends, and coding best practices. Join our community!
@@ -24,10 +24,10 @@ const Footer = () => {
             <h4 className="font-semibold mb-4">Quick Links</h4>
             <ul className="space-y-2">
               <li>
-                <a href="#" className="hover:text-indigo-600 transition">Home</a>
+                <a href="/" className="hover:text-indigo-600 transition">Home</a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition">All Posts</a>
+                <a href="/" className="hover:text-indigo-600 transition">All Posts</a>
               </li>
               <li>
                 <a href="#" className="hover:text-indigo-600 transition">Categories</a>
@@ -52,7 +52,7 @@ const Footer = () => {
                 <a href="#" className="hover:text-indigo-600 transition">Privacy Policy</a>
               </li>
               <li>
-                <a href="#" className="hover:text-indigo-600 transition">Terms of Service</a>
+                <a href="" className="hover:text-indigo-600 transition">Terms of Service</a>
               </li>
             </ul>
           </div>
