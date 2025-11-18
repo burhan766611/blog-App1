@@ -18,15 +18,16 @@ jobs:
         # See supported Node.js release schedule at https://nodejs.org/en/about/releases/
 
     steps:
-    - name: Backup .env
-      run: |
-        if [ -f .env ]; then mv .env /tmp/env_backup; fi
-        
+    
     - uses: actions/checkout@v4
 
-    - name: Restore .env
+    - name: Create .env
       run: |
-        if [ -f /tmp/env_backup ]; then mv /tmp/env_backup .env; fi
+        echo "PORT=${{ secrets.PORT }}" >> .env
+        echo "MONGO_URI=${{ secrets.MONGO_URI }}" >> .env
+        echo "FRONTEND_URI=${{ secrets.FRONTEND_URI }}" >> .env
+        echo "SECRET_KEY=${{ secrets.SECRET_KEY }}" >> .env
+        echo "OPENAI_API_KEY=${{ secrets.OPENAI_API_KEY }}" >> .env
         
     - name: Use Node.js ${{ matrix.node-version }}
       uses: actions/setup-node@v4
