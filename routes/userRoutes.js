@@ -29,6 +29,15 @@ router.post("/signup", async (req, res) => {
       password: hash,
     });
 
+    const token = jwt.sign({ id: user._id, email: user.email }, secret_key);
+
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: false,
+      sameSite: "lax",
+      maxAge: 60 * 60 * 1000,
+    });
+
     res.json({ success: true, message: "Signup Succesfull", user });
   } catch (err) {
     console.log(err);
@@ -65,8 +74,8 @@ router.post("/login", async (req, res) => {
 
     res.cookie("token", token, {
       httpOnly: true,
-      secure: true,
-      sameSite: "none",
+      secure: false,
+      sameSite: "lax",
       maxAge: 60 * 60 * 1000,
     });
 
