@@ -34,7 +34,6 @@ app.get('/', (req, res) => {
 })
 
 app.get("/me", isLogin, (req, res) => {
-  // console.log(req.user.id);
   res.json({
     success: true,
     user: req.user,
