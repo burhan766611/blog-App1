@@ -38,7 +38,7 @@ router.post("/signup", async (req, res) => {
       maxAge: 60 * 60 * 1000,
     });
 
-    res.json({ success: true, message: "Signup Succesfull", user });
+    res.json({ success: true, message: "Signup Succesfull", user: user });
   } catch (err) {
     console.log(err);
     res.json({
