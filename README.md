@@ -1,2 +1,2 @@
 # wordweaveAI-backend
-Live demo (http://56.228.62.145)
+Live demo (https://blog-app1-1-frontend.onrender.com)
